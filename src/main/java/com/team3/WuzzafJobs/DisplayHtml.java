@@ -1,10 +1,5 @@
 package com.team3.WuzzafJobs;
 
-import org.apache.spark.sql.Row;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.spark.sql.Row;
 

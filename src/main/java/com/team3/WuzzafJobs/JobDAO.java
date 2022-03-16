@@ -1,10 +1,6 @@
 package com.team3.WuzzafJobs;
 
 import org.apache.spark.ml.feature.StringIndexer;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.spark.mllib.clustering.KMeans;
-import org.apache.spark.mllib.clustering.KMeansModel;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.StructType;
 import org.knowm.xchart.*;
@@ -12,17 +8,16 @@ import org.knowm.xchart.style.Styler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.awt.*;
-import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-import static org.apache.spark.sql.functions.col;
+
+import static org.apache.spark.sql.functions.*;
 
 public class JobDAO{
 
