@@ -1,70 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Wuzzuf jobs services</title>
-        <style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wuzzuf jobs services</title>
+    <style>
             body{
                 font-family:sans-serif;
-                background-color: rgb(146, 138, 133);
+                background-color: #F5F5F5;
                 margin: 0;
                 padding: 0;
             }
-
-
-            .head{
-                margin:auto;
+            .header{
+                margin-left:4%;
                 text-align: center;
                 width:100%;
                 font-weight:bold;
                 font-size:2em;
-                color: #efefed;
+                color: #21325E;
             }
-
-
-
-            .button{
-                margin:auto;
+            .section{
+                margin-left:30%;
                 width:50%;
                 height:280px;
                 padding:10px;
                 text-align:center;
             }
-            .button2{
+            .button{
                 height:60px;
-                width:200px;
+                width:600px;
                 margin:5px;
                 padding: 10px;
-                background-color: #ee9a56;
+                background-color: #398AB9;
                 color: #ffffff;
                 border:none;
                 border-radius:8px;
                 font-weight:bold;
+                font-size:1em;
                 cursor:pointer;
-
+                display:block;
             }
-            .button2:hover{
-                color: red;
+            .button:hover{
+                color: #CDDEFF;
             }
         </style>
-	</head>
-	
-	<body>
-            <div class="head"><h1>Wuzzuf jobs services</h1></div>
-            <div class="button">
-                <button class="button2" onclick="location.href='http://localhost:3300/show_first_records'">Show first data records</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_structure'">Show the structure</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_summary'" >Show summary</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_top_companies'">Show top companies</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_top_titles'">Show top titles</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_top_areas'">Show top areas</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_pie_chart'">Show company pie chart</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/title_bar_chart'">Show title bar chart</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/location_bar_chart'">Show location bar chart</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_top_skills'">Show top skills</button>
-                <button class="button2" onclick="location.href='http://localhost:3300/show_YearsExp'">Show factorized years</button>
-            </div>
-	</body>
+</head>
+
+<body>
+<div class="header"><h1>Wuzzuf Jobs Analysis</h1></div>
+<div class="section">
+    <button class="button" onclick="location.href='http://localhost:3300/show_first_records'">Dataset First Records</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_structure'">Dataset structure</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_summary'" >Dataset summary</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_companies'">What are the most demanding companies for jobs?</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_titles'">What are the most popular job titles?</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_areas'">What is the most popular areas?</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_skills'">What is the most important skills required?</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_YearsExp'">Factorize the YearsExp feature </button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_pie_chart'">Demanding companies for jobs pie chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/title_bar_chart'">Popular job titles bar chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/location_bar_chart'">Popular areas bar chart</button>
+</div>
+</body>
 
 </html>

@@ -22,19 +22,10 @@ import static org.apache.spark.sql.functions.*;
 public class JobDAO{
 
     // Create Spark Session to create connection to Spark
-    public DataFrameReader  getFrameReader() {
-        final SparkSession session  = SparkSession.builder().appName("Jobs").master("local[2]").getOrCreate();
-        return session.read();
-    }
-    public SparkSession getFrameRead(){
-        final SparkSession session = SparkSession.builder().appName("Jobs").master("local[2]").getOrCreate();
-        return session;
-    }
-
-
-    // read data , clean null and duplicate values
     public Dataset<Row> getDataset() {
-        Dataset<Row> data = getFrameReader().option("header", "true").csv("src/main/resources/files/Wuzzuf_Jobs.csv");
+        final SparkSession session  = SparkSession.builder().appName("Wuzzuf Jobs Project").master("local[4]").getOrCreate();
+        DataFrameReader Dataframe = session.read();
+        Dataset<Row> data = Dataframe.option("header", "true").csv("src/main/resources/files/Wuzzuf_Jobs.csv");
         data = data.na().drop().distinct();
         return data;
     }
@@ -42,19 +33,16 @@ public class JobDAO{
     Dataset<Row> data = getDataset();
 
     // show some of the data
-    public String ShowData(){
+    public String ShowFirstData(){
         List<Row> first_20_records = data.limit(20).collectAsList();
         return DisplayHtml.displayrows(data.columns(), first_20_records);
     }
 
-
     // Print Schema to see column names, types and other metadata
     public String structure(){
         StructType d = data.schema();
-        return d.prettyJson();
+        return d.treeString();
     }
-
-
 
     // Print summary
     public String summary() {
@@ -63,14 +51,17 @@ public class JobDAO{
         return DisplayHtml.displayrows(d.columns(), summary);
     }
 
-
     // Count the jobs for each company and display that in order
     public String jobsByCompany(){
-        Dataset<Row> company = data.groupBy("Company").count().orderBy(col("count").desc()).limit(20);
-        List<Row> top_Companies = company.collectAsList();
-        return DisplayHtml.displayrows(company.columns(), top_Companies);
+        //Dataset<Row> company = data.groupBy("Company").count().orderBy(col("count").desc()).limit(20);
+        data.createOrReplaceTempView ("Wuzzuf_DF");
+        final SparkSession sparkSession = SparkSession.builder ().appName ("Wuzzuf Jobs Project").master ("local[4]")
+                .getOrCreate ();
+        final Dataset<Row> demandingCompany = sparkSession
+                .sql ("SELECT Company,Count(*) AS Available_Jobs FROM Wuzzuf_DF GROUP BY Company ORDER BY Count(*) DESC ");
+        List<Row> top_Companies = demandingCompany.collectAsList();
+        return DisplayHtml.displayrows(demandingCompany.columns(), top_Companies);
     }
-
 
     //Show  previous data in a pie chart
     public String pieChartForCompany() throws IOException {
@@ -134,7 +125,6 @@ public class JobDAO{
         return DisplayHtml.viewchart(path);
 
     }
-
 
     // Skills one by one
     public ResponseEntity<Object> skill() {

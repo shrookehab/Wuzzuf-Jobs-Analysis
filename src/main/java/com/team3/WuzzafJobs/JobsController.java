@@ -11,7 +11,7 @@ public class JobsController {
     JobDAO service = new JobDAO();
     @GetMapping("/show_first_records")
     public  String  show_first_records(){
-        return service.ShowData();
+        return service.ShowFirstData();
     }
 
     @GetMapping("/show_structure")

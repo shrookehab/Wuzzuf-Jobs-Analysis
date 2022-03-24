@@ -6,6 +6,24 @@ public class HTMLTableBuilder {
     private final StringBuilder table = new StringBuilder();
     public static String HTML_START = "<html>";
     public static String HTML_END = "</html>";
+    public static String HEAD_START = "<head>";
+    public static String HEAD_END = "</head>";
+    public static String BODY_START = "<body>";
+    public static String BODY_END = "</body>";
+    public static String STYLE_START = "<style>";
+    public static String STYLE_END = "</style>";
+    public static String STYLE_TR = "tr:nth-child(even) {background-color: #f2f2f2;}";
+    public static String STYLE_TH = "th {\n" +
+            "  background-color: #548CFF;\n" +
+            "  padding: 15px;\n" +
+            "  color: white;\n" +
+            "  text-align: left;\n" +
+            "}";
+    public static String STYLE_TD = "td {\n" +
+            "  text-align: left;\n" +
+            "  padding: 15px;\n" +
+            "  border: none;\n" +
+            "}";
     public static String TABLE_START_BORDER = "<table border=\"1\">";
     public static String TABLE_START = "<table>";
     public static String TABLE_END = "</table>";
@@ -31,8 +49,17 @@ public class HTMLTableBuilder {
             table.append("</b>");
         }
         table.append(HTML_START);
+        table.append(HEAD_START);
+        table.append(STYLE_START);
+        table.append(STYLE_TR);
+        table.append(STYLE_TH);
+        table.append(STYLE_TD);
+        table.append(STYLE_END);
+        table.append(HEAD_END);
+        table.append(BODY_START);
         table.append(border ? TABLE_START_BORDER : TABLE_START);
         table.append(TABLE_END);
+        table.append(BODY_END);
         table.append(HTML_END);
     }
 
