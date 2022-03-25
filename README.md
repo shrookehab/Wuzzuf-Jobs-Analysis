@@ -1,11 +1,11 @@
 # Wuzzuf-Jobs-Analysis
-Data Set:
+## Data Set:
 
 Wuzzuf jobs in Egypt data set at Kaggle
 
    https://www.kaggle.com/omarhanyy/wuzzuf-jobs
 
-Task: 
+## Task: 
 
 •	Build all java needed classes (POJO , DAO, web service and a tester client for the web service)
 
@@ -37,3 +37,21 @@ Task:
   11.	Factorize the YearsExp feature and convert it to numbers in new col. (Bonus )
 
   12.	Apply K-means for job title and companies (Bonus)
+
+## Tools Used
+
+* [Java intellij Ultimate Edition](https://www.jetbrains.com/idea/download/#section=windows)
+* [Java SE 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
+
+## Usage 
+* To run the project use this URL: http://localhost:3300/
+
+## Acknowledgements
+
+* [Apache Spark](https://spark.apache.org/documentation.html)
+* [Spring Web Service](https://start.spring.io/)
+* [Tablesaw](https://javadoc.io/doc/tech.tablesaw/tablesaw-core/latest/overview-summary.html)
+
+## Author 
+
+* [Shrook Ehab](https://github.com/shrookehab) [ORIGINAL]
