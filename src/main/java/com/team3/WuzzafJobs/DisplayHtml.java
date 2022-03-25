@@ -6,6 +6,7 @@ import org.apache.spark.sql.Row;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class DisplayHtml {
@@ -25,6 +26,23 @@ public class DisplayHtml {
 
 
     }
+
+    public static String displayStrings(String []head, String[] ls){
+
+        builder=new HTMLTableBuilder(null,true,3,head.length);
+        builder.addTableHeader(head);
+        String[] s = {"", "", ""};
+        for(int i = 3; i < ls.length; i+=3){
+            s[0] =  ls[i].toString();
+            s[1] = ls[i+1].toString();
+            s[2] = ls[i+2].toString();
+            builder.addRowValues(s);
+        }
+        return builder.build();
+
+
+    }
+
     public static String viewchart(String path){
 
         FileInputStream img ;

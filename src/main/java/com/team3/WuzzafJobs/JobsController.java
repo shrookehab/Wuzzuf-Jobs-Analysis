@@ -9,13 +9,18 @@ import java.io.IOException;
 public class JobsController {
 
     JobDAO service = new JobDAO();
-    @GetMapping("/show_first_records")
-    public  String  show_first_records(){
-        return service.ShowFirstData();
+    @GetMapping("/dateset_before_cleaning")
+    public  String  dateset_before_cleaning(){
+        return service.ShowDataBeforeCleaning();
+    }
+
+    @GetMapping("/dateset_after_cleaning")
+    public  String  dateset_after_cleaning(){
+        return service.ShowDataAfterCleaning();
     }
 
     @GetMapping("/show_structure")
-    public  String  show_structure(){
+    public  String  show_structure() throws IOException {
         return service.structure();
     }
 
@@ -64,5 +69,10 @@ public class JobsController {
     @GetMapping("/show_YearsExp")
     public  String  show_YearsExp()  {
         return service.factYearsExp();
+    }
+
+    @GetMapping("/KMeans_Clustering")
+    public  String  KMeans_Clustering()  {
+        return service.kMeansClustering();
     }
 }

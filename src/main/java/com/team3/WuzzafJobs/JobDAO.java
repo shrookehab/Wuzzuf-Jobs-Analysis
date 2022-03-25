@@ -1,5 +1,8 @@
 package com.team3.WuzzafJobs;
 
+import org.apache.spark.ml.clustering.KMeans;
+import org.apache.spark.ml.clustering.KMeansModel;
+import org.apache.spark.ml.evaluation.ClusteringEvaluator;
 import org.apache.spark.ml.feature.StringIndexer;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.StructType;
@@ -7,7 +10,8 @@ import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.apache.spark.ml.linalg.Vector;
+import tech.tablesaw.api.Table;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,22 +30,43 @@ public class JobDAO{
         final SparkSession session  = SparkSession.builder().appName("Wuzzuf Jobs Project").master("local[4]").getOrCreate();
         DataFrameReader Dataframe = session.read();
         Dataset<Row> data = Dataframe.option("header", "true").csv("src/main/resources/files/Wuzzuf_Jobs.csv");
-        data = data.na().drop().distinct();
         return data;
     }
 
-    Dataset<Row> data = getDataset();
+    Dataset<Row> data1 = getDataset();
 
-    // show some of the data
-    public String ShowFirstData(){
-        List<Row> first_20_records = data.limit(20).collectAsList();
+    public String ShowDataBeforeCleaning(){
+        List<Row> first_20_records = data1.limit(50).collectAsList();
+        return DisplayHtml.displayrows(data1.columns(), first_20_records);
+    }
+
+
+
+    public Dataset<Row> getDatasetCleaning() {
+        Dataset<Row> data2 = data1.na().drop().distinct();
+        return data2;
+    }
+
+    Dataset<Row> data = getDatasetCleaning();
+
+    public String ShowDataAfterCleaning(){
+        List<Row> first_20_records = data.limit(50).collectAsList();
         return DisplayHtml.displayrows(data.columns(), first_20_records);
     }
 
     // Print Schema to see column names, types and other metadata
-    public String structure(){
-        StructType d = data.schema();
-        return d.treeString();
+    public String structure() throws IOException {
+        Table wuzzufData= Table.read().csv("src/main/resources/files/Wuzzuf_Jobs.csv");
+        String[] splitedData = wuzzufData.structure().toString().replaceAll("-", "").replaceAll(" ", "").split("\\|", 3);
+        String[] columns = {splitedData[0].toString(), splitedData[1].toString(), splitedData[2].toString()};
+        //String[] columns = {"Index", "Column Name", "Column Type"};
+        for (String s : splitedData){
+            System.out.println(s);
+        }
+
+        return DisplayHtml.displayStrings(columns, splitedData);
+//        StructType d = data.schema();
+//        return d.treeString();
     }
 
     // Print summary
@@ -162,6 +187,29 @@ public class JobDAO{
         String columns[] = {"YearsExp", "YearsExp indexed"};
         List<Row> yeasExpIndexed = new_data.select("YearsExp", "YearsExp indexed").limit(30).collectAsList();
         return DisplayHtml.displayrows(columns, yeasExpIndexed);
+    }
+
+    public String kMeansClustering(){
+        final SparkSession session  = SparkSession.builder().appName("Wuzzuf Jobs Project").master("local[4]").getOrCreate();
+        Dataset<Row> dataset = session.read().format("libsvm").load("src/main/resources/files/Wuzzuf_Jobs.csv");
+        KMeans kmeans = new KMeans().setK(2).setSeed(1L);
+        KMeansModel model = kmeans.fit(dataset);
+        // Make predictions
+        Dataset<Row> predictions = model.transform(dataset);
+        // Evaluate clustering by computing Silhouette score
+        ClusteringEvaluator evaluator = new ClusteringEvaluator();
+        double silhouette = evaluator.evaluate(predictions);
+        System.out.println("Silhouette Score with squared euclidean distance = " + silhouette);
+//        double WSSSE = model.computeCost(data);
+//        System.out.println("Within Set Sum of Squared Errors = " + WSSSE);
+        // Shows the result.
+        Vector[] centers = model.clusterCenters();
+        String columns[] = {"Cluster Centers"};
+        for (Vector center: centers) {
+            System.out.println(center);
+        }
+        //return DisplayHtml.displayrows(columns, centers.collectAsList());
+        return "";
     }
 
 }

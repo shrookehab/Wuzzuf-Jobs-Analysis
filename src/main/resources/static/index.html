@@ -20,28 +20,29 @@
                 color: #21325E;
             }
             .section{
-                margin-left:30%;
+                margin-left:25%;
                 width:50%;
                 height:280px;
                 padding:10px;
                 text-align:center;
             }
             .button{
-                height:60px;
-                width:600px;
+                height:75px;
+                width:250px;
                 margin:5px;
                 padding: 10px;
                 background-color: #398AB9;
-                color: #ffffff;
+                color: #FFFFFF;
                 border:none;
                 border-radius:8px;
                 font-weight:bold;
                 font-size:1em;
                 cursor:pointer;
-                display:block;
+                display:inline-block;
             }
             .button:hover{
-                color: #CDDEFF;
+                background: #CDDEFF;
+                color: #FFFFFF;
             }
         </style>
 </head>
@@ -49,17 +50,22 @@
 <body>
 <div class="header"><h1>Wuzzuf Jobs Analysis</h1></div>
 <div class="section">
-    <button class="button" onclick="location.href='http://localhost:3300/show_first_records'">Dataset First Records</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_structure'">Dataset structure</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_summary'" >Dataset summary</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_top_companies'">What are the most demanding companies for jobs?</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_top_titles'">What are the most popular job titles?</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_top_areas'">What is the most popular areas?</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_top_skills'">What is the most important skills required?</button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_YearsExp'">Factorize the YearsExp feature </button>
-    <button class="button" onclick="location.href='http://localhost:3300/show_pie_chart'">Demanding companies for jobs pie chart</button>
-    <button class="button" onclick="location.href='http://localhost:3300/title_bar_chart'">Popular job titles bar chart</button>
-    <button class="button" onclick="location.href='http://localhost:3300/location_bar_chart'">Popular areas bar chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/dateset_before_cleaning'">(1) Dataset Before cleaning</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_structure'">(2.1) Dataset structure</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_summary'" >(2.2) Dataset summary</button>
+    <button class="button" onclick="location.href='http://localhost:3300/dateset_after_cleaning'" >(3) Dataset After cleaning</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_companies'">(4) The most demanding companies for jobs</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_pie_chart'">(5) Demanding companies for jobs pie chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_titles'">(6) The most popular job titles</button>
+    <button class="button" onclick="location.href='http://localhost:3300/title_bar_chart'">(7) Popular job titles bar chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_areas'">(8) The most popular areas</button>
+    <button class="button" onclick="location.href='http://localhost:3300/location_bar_chart'">(9) Popular areas bar chart</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_top_skills'">(10) The most important skills required</button>
+    <button class="button" onclick="location.href='http://localhost:3300/show_YearsExp'">(11) Factorize the YearsExp feature </button>
+    <button class="button" onclick="location.href='http://localhost:3300/KMeans_Clustering'">(12) K-means for job title and companies  </button>
+
+
+
 </div>
 </body>
 
