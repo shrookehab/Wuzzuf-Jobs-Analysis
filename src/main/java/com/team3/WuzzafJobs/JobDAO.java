@@ -40,7 +40,7 @@ public class JobDAO{
 
 
     public Dataset<Row> getDatasetCleaning() {
-        Dataset<Row> data2 = data1.na().drop().distinct();
+        Dataset<Row> data2 = data1.na().drop().dropDuplicates();
         return data2;
     }
 
@@ -165,13 +165,27 @@ public class JobDAO{
     }
 
     // Factorize Years Exp feature in the original data
-    public String factYearsExp(){
-        StringIndexer idx = new StringIndexer();
-        idx.setInputCol("YearsExp").setOutputCol("YearsExp indexed");
-        Dataset<Row> new_data = idx.fit(data).transform(data);
-        String columns[] = {"YearsExp", "YearsExp indexed"};
-        List<Row> yeasExpIndexed = new_data.select("YearsExp", "YearsExp indexed").limit(30).collectAsList();
-        return DisplayHtml.displayrows(columns, yeasExpIndexed);
+    public String fatorizeYearsExp(){
+        Dataset<Row> newDs = new StringIndexer().setInputCol("YearsExp")
+                .setOutputCol("YearsExpEncoded")
+                .fit(data)
+                .transform(data);
+        String columns[] = {"YearsExp", "YearsExpEncoded"};
+        List<Row> yeasExpEncoded = newDs.select("YearsExp", "YearsExpEncoded").distinct().orderBy(col("YearsExpEncoded").asc()).collectAsList();
+        return DisplayHtml.displayrows(columns, yeasExpEncoded);
+    }
+    // Display the dataset after factorization
+    public String datasetAfterFatorization(){
+        Dataset<Row> newDs = getDatasetCleaning();
+        Dataset<Row> newDs1 = new StringIndexer().setInputCol("YearsExp")
+                .setOutputCol("YearsExpIndex")
+                .fit(newDs)
+                .transform(newDs);
+        //Dataset<Row> dataset = newDs1.select("YearsExpIndex");
+        //data = data.withColumn("YearsExpEncoded", dataset.col("YearsExpIndex"));
+        String[] columns = {"Title", "Company", "Location", "Type", "Level", "YearsExp", "YearsExpEncoded", "Country", "Skills"};
+        List<Row> yeasExpEncoded = newDs1.select("Title", "Company", "Location", "Type", "Level", "YearsExp", "YearsExpIndex", "Country", "Skills").collectAsList();
+        return DisplayHtml.displayrows(columns, yeasExpEncoded);
     }
     //Apply K-means for job title and companies
     public String kMeansClustering(){

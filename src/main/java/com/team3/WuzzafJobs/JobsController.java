@@ -10,64 +10,69 @@ public class JobsController {
 
     JobDAO service = new JobDAO();
     @GetMapping("/dateset_before_cleaning")
-    public  String  dateset_before_cleaning(){
+    public String dateset_before_cleaning(){
         return service.ShowDataBeforeCleaning();
     }
 
     @GetMapping("/dateset_after_cleaning")
-    public  String  dateset_after_cleaning(){
+    public String dateset_after_cleaning(){
         return service.ShowDataAfterCleaning();
     }
 
-    @GetMapping("/show_structure")
-    public  String  show_structure() throws IOException {
+    @GetMapping("/dataset_structure")
+    public String dataset_structure() throws IOException {
         return service.structure();
     }
 
-    @GetMapping("/show_summary")
-    public  String  show_summary(){
+    @GetMapping("/dataset_summary")
+    public String dataset_summary(){
         return service.summary();
     }
 
 
-    @GetMapping("/show_top_companies")
-    public  String  show_top_companies(){
+    @GetMapping("/top_companies")
+    public String top_companies(){
         return service.jobsByCompany();
     }
 
-    @GetMapping("/show_top_titles")
-    public  String  show_top_titles(){
+    @GetMapping("/top_titles")
+    public String top_titles(){
         return service.JobsByTitles();
     }
 
-    @GetMapping("/show_top_areas")
-    public  String  show_top_countries(){
+    @GetMapping("/top_areas")
+    public String top_areas(){
         return service.JobsByAreas();
     }
 
-    @GetMapping("/show_pie_chart")
-    public  String  show_pie_chart() throws IOException {
+    @GetMapping("/pie_chart")
+    public String pie_chart() throws IOException {
         return service.pieChartForCompany();
     }
 
     @GetMapping("/title_bar_chart")
-    public  String  title_bar_chart() throws IOException {
+    public String title_bar_chart() throws IOException {
         return service.TitlesBarChart();
     }
 
     @GetMapping("/location_bar_chart")
-    public  String  location_bar_chart() throws IOException {
+    public String location_bar_chart() throws IOException {
         return service.areasBarChart();
     }
 
-    @GetMapping("/show_top_skills")
-    public String show_top_skills() {
+    @GetMapping("/top_skills")
+    public String top_skills() {
         return service.mostImportantSkills();
     }
 
-    @GetMapping("/show_YearsExp")
-    public  String  show_YearsExp()  {
-        return service.factYearsExp();
+    @GetMapping("/fact_Years_Exp")
+    public String fact_Years_Exp()  {
+        return service.fatorizeYearsExp();
+    }
+
+    @GetMapping("/dataset_after_factorization")
+    public String dataset_after_factorization()  {
+        return service.datasetAfterFatorization();
     }
 
     @GetMapping("/KMeans_Clustering")
