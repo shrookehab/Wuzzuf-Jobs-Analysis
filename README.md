@@ -24,7 +24,7 @@ Wuzzuf jobs in Egypt data set at Kaggle
 
   6.	Find out what are the most popular job titles.
 
-  7.	Show step 6 in bar chart 
+  7.	Show step 6 in bar chart
       ![Popular Job Titles Bar Chart](https://github.com/shrookehab/Wuzzuf-Jobs-Analysis/blob/master/src/main/resources/files/PopularJobTitlesBarChart.jpg)
 
   8.	Find out the most popular areas?
