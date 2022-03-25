@@ -75,7 +75,7 @@ public class JobDAO{
         final SparkSession sparkSession = SparkSession.builder ().appName ("Wuzzuf Jobs Project").master ("local[4]")
                 .getOrCreate ();
         final Dataset<Row> demandingCompany = sparkSession
-                .sql ("SELECT Company,Count(*) AS Available_Jobs FROM Wuzzuf_DF GROUP BY Company ORDER BY Count(*) DESC ");
+                .sql ("SELECT Company,Count(*) AS JobsCount FROM Wuzzuf_DF GROUP BY Company ORDER BY Count(*) DESC ");
         List<Row> top_Companies = demandingCompany.collectAsList();
         return DisplayHtml.displayrows(demandingCompany.columns(), top_Companies);
     }
