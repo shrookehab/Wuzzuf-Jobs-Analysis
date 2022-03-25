@@ -47,17 +47,17 @@ public class JobsController {
 
     @GetMapping("/pie_chart")
     public String pie_chart() throws IOException {
-        return service.pieChartForCompany();
+        return service.jobsByCompanyPieChart();
     }
 
     @GetMapping("/title_bar_chart")
     public String title_bar_chart() throws IOException {
-        return service.TitlesBarChart();
+        return service.PopularJobTitlesBarChart();
     }
 
     @GetMapping("/location_bar_chart")
     public String location_bar_chart() throws IOException {
-        return service.areasBarChart();
+        return service.PopularAreasBarChart();
     }
 
     @GetMapping("/top_skills")

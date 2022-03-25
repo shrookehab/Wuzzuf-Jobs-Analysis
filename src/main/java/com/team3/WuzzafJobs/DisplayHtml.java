@@ -70,8 +70,8 @@ public class DisplayHtml {
             img.read(bytes);
             String encodedfile = new String(Base64.encodeBase64(bytes) , "UTF-8");
 
-            return "<div>" +
-                    "<img src=\"data:image/png;base64, "+encodedfile+"\" alt=\"Red dot\" />" +
+            return "<div  class=\"img-container\">" +
+                    "<img src=\"data:image/jpg;base64, "+encodedfile+"\" alt=\"Red dot\" style=\"text-align: center;display: block; margin-left: auto;margin-right: auto;\"/>" +
                     "</div>";
         } catch (IOException e) {
             return "error";
