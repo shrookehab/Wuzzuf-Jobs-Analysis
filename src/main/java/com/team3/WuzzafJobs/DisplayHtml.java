@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class DisplayHtml {
     private static HTMLTableBuilder builder ;
@@ -31,12 +32,28 @@ public class DisplayHtml {
 
         builder=new HTMLTableBuilder(null,true,3,head.length);
         builder.addTableHeader(head);
-        String[] s = {"", "", ""};
-        for(int i = 3; i < ls.length; i+=3){
-            s[0] =  ls[i].toString();
-            s[1] = ls[i+1].toString();
-            s[2] = ls[i+2].toString();
-            builder.addRowValues(s);
+        String[] s1 = {"", "", ""};
+        String[] s = ls[2].replaceAll("-", "").split("\\|");
+        for(int i = 0; i < s.length; i+=3){
+            s1[0] = s[i];
+            s1[1] = s[i + 1];
+            s1[2] = s[i + 2];
+            builder.addRowValues(s1);
+        }
+        return builder.build();
+
+
+    }
+
+    public static String displayMap(String []head, Map<String, Long> MapString){
+
+        builder=new HTMLTableBuilder(null,true,3,head.length);
+        builder.addTableHeader(head);
+        String[] s1 = {"", ""};
+        for (Map.Entry<String, Long> m : MapString.entrySet()) {
+            s1[0] = m.getKey();
+            s1[1] = m.getValue().toString();
+            builder.addRowValues(s1);
         }
         return builder.build();
 

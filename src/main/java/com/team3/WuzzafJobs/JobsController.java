@@ -24,7 +24,6 @@ public class JobsController {
         return service.structure();
     }
 
-
     @GetMapping("/show_summary")
     public  String  show_summary(){
         return service.summary();
@@ -62,8 +61,8 @@ public class JobsController {
     }
 
     @GetMapping("/show_top_skills")
-    public ResponseEntity<Object> show_top_skills() {
-        return service.skill();
+    public String show_top_skills() {
+        return service.mostImportantSkills();
     }
 
     @GetMapping("/show_YearsExp")

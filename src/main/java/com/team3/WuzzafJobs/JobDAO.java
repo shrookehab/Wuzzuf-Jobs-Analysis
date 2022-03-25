@@ -14,10 +14,7 @@ import org.apache.spark.ml.linalg.Vector;
 import tech.tablesaw.api.Table;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -57,16 +54,9 @@ public class JobDAO{
     // Print Schema to see column names, types and other metadata
     public String structure() throws IOException {
         Table wuzzufData= Table.read().csv("src/main/resources/files/Wuzzuf_Jobs.csv");
-        String[] splitedData = wuzzufData.structure().toString().replaceAll("-", "").replaceAll(" ", "").split("\\|", 3);
-        String[] columns = {splitedData[0].toString(), splitedData[1].toString(), splitedData[2].toString()};
-        //String[] columns = {"Index", "Column Name", "Column Type"};
-        for (String s : splitedData){
-            System.out.println(s);
-        }
-
+        String[] splitedData = wuzzufData.structure().toString().split("\\n", 3);
+        String[] columns = {"Index", "Column Name", "Column Type"};
         return DisplayHtml.displayStrings(columns, splitedData);
-//        StructType d = data.schema();
-//        return d.treeString();
     }
 
     // Print summary
@@ -104,7 +94,7 @@ public class JobDAO{
 
     //Most popular job titles
     public String JobsByTitles(){
-        Dataset<Row> title = data.groupBy("Title").count().orderBy(col("count").desc()).limit(20);
+        Dataset<Row> title = data.groupBy("Title").count().orderBy(col("count").desc());
         List<Row> top_titles = title.collectAsList();
         return DisplayHtml.displayrows(title.columns(), top_titles);
     }
@@ -128,7 +118,7 @@ public class JobDAO{
 
     // Most popular areas
     public String JobsByAreas(){
-        Dataset<Row> area = data.groupBy("Location").count().orderBy(col("count").desc()).limit(20);;
+        Dataset<Row> area = data.groupBy("Location").count().orderBy(col("count").desc());;
         List<Row> top_titles = area.collectAsList();
         return DisplayHtml.displayrows(area.columns(), top_titles);
     }
@@ -151,8 +141,7 @@ public class JobDAO{
 
     }
 
-    // Skills one by one
-    public ResponseEntity<Object> skill() {
+    public String mostImportantSkills(){
         List<String> allSkills = data.select("Skills").as(Encoders.STRING()).collectAsList();
         List<String> skills = new ArrayList<>();
         for (String ls : allSkills) {
@@ -165,19 +154,15 @@ public class JobDAO{
         Map<String, Long> skill_counts =
                 skills.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
-        List<String> s = new ArrayList<>();
-        List<Long> counts = new ArrayList<>();
-        for (Map.Entry<String, Long> m : skill_counts.entrySet()) {
-            s.add(m.getKey());
-            counts.add(m.getValue());
-        }
+        Map<String, Long> mostImportantSkills =
+                skill_counts.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-
-        return new ResponseEntity<>(skill_counts.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).filter(x -> x.getValue() > 100), HttpStatus.OK);
-
+        String[] columns = {"Most Important Skills", "Count"};
+        return DisplayHtml.displayMap(columns, mostImportantSkills);
     }
-
 
     // Factorize Years Exp feature in the original data
     public String factYearsExp(){
@@ -188,10 +173,11 @@ public class JobDAO{
         List<Row> yeasExpIndexed = new_data.select("YearsExp", "YearsExp indexed").limit(30).collectAsList();
         return DisplayHtml.displayrows(columns, yeasExpIndexed);
     }
-
+    //Apply K-means for job title and companies
     public String kMeansClustering(){
-        final SparkSession session  = SparkSession.builder().appName("Wuzzuf Jobs Project").master("local[4]").getOrCreate();
-        Dataset<Row> dataset = session.read().format("libsvm").load("src/main/resources/files/Wuzzuf_Jobs.csv");
+        //final SparkSession session  = SparkSession.builder().appName("Wuzzuf Jobs Project").master("local[4]").getOrCreate();
+        //Dataset<Row> dataset = session.read().format("libsvm").load("src/main/resources/files/Wuzzuf_Jobs.csv");
+        Dataset<Row> dataset = data.select("Title", "Company");
         KMeans kmeans = new KMeans().setK(2).setSeed(1L);
         KMeansModel model = kmeans.fit(dataset);
         // Make predictions

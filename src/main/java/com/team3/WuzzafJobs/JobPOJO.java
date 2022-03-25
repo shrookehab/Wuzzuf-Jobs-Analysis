@@ -104,7 +104,10 @@ public class JobPOJO implements Comparator<JobPOJO> {
     }
 
     @Override
-    public int compare(JobPOJO o1, JobPOJO o2) {
-        return 0;
+    public int compare(JobPOJO job1, JobPOJO job2) {
+        return job1.getCountry().compareTo(job2.getCountry()) & job1.getCompany().compareTo(job2.getCompany()) &
+                job1.getYearsExp().compareTo(job2.getYearsExp()) & job1.getLevel().compareTo(job2.getLevel()) &
+                job1.getLocation().compareTo(job2.getLocation()) & job1.getTitle().compareTo(job2.getTitle()) &
+                job1.getType().compareTo(job2.getType()) & job1.getSkills().compareTo(job2.getSkills()) ;
     }
 }
