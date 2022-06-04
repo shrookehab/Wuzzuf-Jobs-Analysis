@@ -4,6 +4,7 @@
 Wuzzuf jobs in Egypt data set at Kaggle
 
    https://www.kaggle.com/omarhanyy/wuzzuf-jobs
+   ![Web Page](https://github.com/shrookehab/Wuzzuf-Jobs-Analysis/blob/master/src/main/resources/files/Screenshot%202022-06-04%20at%2012-52-13%20Wuzzuf%20jobs%20services.png)
 
 ## Task: 
 
